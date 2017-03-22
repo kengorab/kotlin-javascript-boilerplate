@@ -1,0 +1,13 @@
+{
+  "name": "kotlinjs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "prestart": "if [ ! -f build/js/module.js ]; then echo \"Compiled file missing! Run ./gradlew build!\"; exit 1; fi",
+    "start": "node build/js/module.js"
+  },
+  "dependencies": {
+    "kotlin": "^1.1.0"
+  }
+}
