@@ -1,29 +1,48 @@
 # Kotlin-Javascript Boilerplate
-An _extremely_ barebones template project for getting started with Javascript (CommonJS) as a build target for Kotlin.
+An _extremely_ barebones template project for getting started with Javascript as a build target for Kotlin.
 
 ## Building
 
 Build using `./gradlew build`, which compiles the `Main.kt` file into the javascript file at `build/js/module.js`.
 This is configurable, but I'll cover that further down. 
 
-The built file is a CommonJS javascript module, which has a `require('kotlin')` statement; this is the kotlin 
-standard library itself, compiled to javascript, and is needed as a dependency of any kotlin code compiled to 
+The built file is a [UMD](http://dontkry.com/posts/code/browserify-and-the-universal-module-definition.html) javascript module, which has a dependency on the kotlin standard library. In order to run in
+javascript, kotlin itself needs to be in javascript, and is needed as a dependency of any kotlin code compiled to 
 javascript. You can configure the build task of this project to output the standard library, or you could pull 
-it in using npm/yarn (I recommend yarn, but that's a different topic).
+it in using npm/yarn (I recommend [yarn](https://yarnpkg.com), but that's a different topic).
 
 Since I've done the latter in this project, you'll need to do an `npm install`/`yarn install` (see below for 
 instructions how to avoid this step and have the kotlin compiler provide the standard library as it builds).
 
 ## Running
 
-Now that you've got your kotlin compiled to javascript, it's time to run it. This example has targeted CommonJS
-so we'll use `node` to run it (more on the different module types below).
+### Using Node
+
+Now that you've got your kotlin compiled to javascript, it's time to run it. This example has targeted UMD so it can run
+server-side using `node`, as well as in the browser.
 
     $ node build/js/module.js
     $ Hello World!
 
 I've also included a script in the `package.json`, so you can also run `npm start`/`yarn start` if you don't want to
 remember/type the whole thing every time.
+
+### In The Browser
+
+Since the module type when compiling was UMD, this can run in the browser as well. If you run `yarn serve` from the root
+of the project (or `python -m SimpleHTTPServer` if you don't have yarn and/or prefer that method) and open it in the browser
+(`yarn serve` serves on `http://localhost:5000` and `python -m SimpleHTTPServer` serves on `http://localhost:8080`), you'll 
+see the `index.html` file, telling you to look in the console, where you'll see the same `'Hello World'!` message printed.
+
+Also, since we've enabled sourcemaps, you can open kotlin files in the Sources browser, and place debugging breakpoints in the
+original source code, much like any other compile-to-javascript language.
+
+Looking at the `index.html` file's source code, we see some basic styling (I couldn't deal with the terrible unstyled page)
+and a couple of `<script>` tags. Remember from above that the kotlin standard library is still a dependency of our compiled
+javascript, and therefore needs to be pulled in first (you'll get an error message if your ordering is incorrect, or if you
+forget it entirely). This is the equivalent of `require('kotlin')` in the browser world, albeit much less powerful and more
+confusing. (This is why tools like [webpack](https://webpack.github.io) were made, to allow us to write frontend javascript
+as if it were CommonJS. I go over the different types of modules later on.)
 
 ## Configuration
 
@@ -41,7 +60,7 @@ The configuration in this project includes:
 ```gradle
 compileKotlin2Js {
     kotlinOptions.outputFile = "${projectDir}/build/js/module.js"
-    kotlinOptions.moduleKind = "commonjs"
+    kotlinOptions.moduleKind = "umd"
     kotlinOptions.sourceMap = true
 }
 ```
@@ -50,7 +69,7 @@ compileKotlin2Js {
 
 The module types correspond to different module loading systems in javascript, explained [here](http://stackoverflow.com/a/16522990):
 
-- CommonJS is the paradigm used in node, [browserify](http://browserify.org), and [webpack](https://webpack.github.io/), and looks something like this:
+- CommonJS is the paradigm used in node, [browserify](http://browserify.org), and [webpack](https://webpack.github.io), and looks something like this:
 
 ```javascript
 // magic-number.js
@@ -99,7 +118,5 @@ files end up.
 
 ---
 
-I plan on adding more to this over time, like getting set up with React (and maybe some server-side rendering of React?), as
-well as exploring other types of module loading. I'd definitely recommend you check out the 
-[official kotlin tutorials](https://kotlinlang.org/docs/tutorials/javascript/getting-started-gradle/getting-started-with-gradle.html),
-as that's where I learned a lot of this stuff anyway.
+I plan on adding more to this over time, like getting set up with React (and maybe some server-side rendering of React?) or building a module in kotlin and calling it from javascript. I'd definitely recommend you check out the 
+[official kotlin tutorials](https://kotlinlang.org/docs/tutorials/javascript/getting-started-gradle/getting-started-with-gradle.html), as that's where I learned a lot of this stuff anyway.
