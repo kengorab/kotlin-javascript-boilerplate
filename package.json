@@ -8,6 +8,7 @@
     "start": "node build/js/module.js"
   },
   "dependencies": {
-    "kotlin": "^1.1.0"
+    "kotlin": "^1.1.0",
+    "serve": "^5.0.4"
   }
 }

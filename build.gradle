@@ -24,6 +24,6 @@ dependencies {
 
 compileKotlin2Js {
     kotlinOptions.outputFile = "${projectDir}/build/js/module.js"
-    kotlinOptions.moduleKind = "commonjs"
+    kotlinOptions.moduleKind = "umd"
     kotlinOptions.sourceMap = true
 }

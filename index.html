@@ -1,0 +1,45 @@
+<html>
+<head>
+    <title>Kotlin to Javascript!!!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css">
+
+    <style>
+        p { line-height: 24px }
+
+        code {
+          font-size: 14px;
+          background: #eee;
+          padding: 4px;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .content {
+            max-width: 746px;
+        }
+    </style>
+</head>
+<body class="container">
+<div class="content">
+    <p>
+        Open your developer tools, and check out the console! There should be "Hello World!" printed there!
+    </p>
+
+    <p>
+        Also, since we've enabled sourcemaps, you can open the Sources tab, hit <code>cmd + p</code>
+        (<code>ctrl + p</code> on non macOS) to bring up the fuzzy-search file browser, and type "Main.kt".
+        You're able to put breakpoints in the kotlin code as the browser runs the compiled javascript.
+    </p>
+
+    <p>
+        That's pretty neat!
+    </p>
+</div>
+
+<script src="node_modules/kotlin/kotlin.js"></script>
+<script src="build/js/module.js"></script>
+</body>
+</html>
