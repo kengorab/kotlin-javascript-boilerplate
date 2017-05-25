@@ -1,4 +1,7 @@
 # Kotlin-Javascript Boilerplate
+
+[![Awesome Kotlin Badge](https://kotlin.link/awesome-kotlin.svg)](https://github.com/KotlinBy/awesome-kotlin)
+
 An _extremely_ barebones template project for getting started with Javascript as a build target for Kotlin.
 
 ## Building
